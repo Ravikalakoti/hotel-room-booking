@@ -85,12 +85,6 @@ export function validateBooking({ checkIn, checkOut, room, bookings = [] }) {
     errors.push('Select a room.');
   }
 
-  if (checkIn && checkOut && checkOut > checkIn && room) {
-    if (!isRoomAvailable(room.code, checkIn, checkOut, bookings)) {
-      errors.push(`${room.code} is already booked for part of that date range.`);
-    }
-  }
-
   const canCalculate =
     checkIn && checkOut && checkOut > checkIn && room && errors.length === 0;
 
