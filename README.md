@@ -80,4 +80,9 @@ src/
 
 ## Screenshot
 
-![Hotel Room Booking Screenshot](./screenshots/booking-page.png)
+![Hotel Room Booking Screenshot](src/screenshots/booking-page.png)
+
+
+## With More Time
+
+I would improve the UI further, add a booking confirmation flow, and expand the test coverage.
