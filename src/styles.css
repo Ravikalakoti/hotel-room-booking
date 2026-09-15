@@ -342,3 +342,32 @@ button {
     font-size: 2.1rem;
   }
 }
+
+.booking-button {
+  width: 100%;
+  margin-top: 20px;
+  padding: 13px 18px;
+
+  border: none;
+  border-radius: 7px;
+
+  background: var(--brass);
+  color: #fff;
+
+  font-family: var(--sans);
+  font-size: 0.92rem;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.booking-button:hover {
+  background: var(--brass-dark);
+  transform: translateY(-1px);
+}
+
+.booking-button:active {
+  transform: translateY(0);
+}

@@ -1,9 +1,12 @@
 import { useMemo, useState } from 'react';
+import Swal from 'sweetalert2';
+
 import StepSection from './components/StepSection.jsx';
 import DateRangeFields from './components/DateRangeFields.jsx';
 import GuestFilter from './components/GuestFilter.jsx';
 import RoomList from './components/RoomList.jsx';
 import BookingSummary from './components/BookingSummary.jsx';
+
 import { ROOMS, EXISTING_BOOKINGS } from './data/rooms.js';
 import { isRoomAvailable, validateBooking } from './utils/booking.js';
 
@@ -33,12 +36,31 @@ export default function App() {
     bookings: EXISTING_BOOKINGS,
   });
 
-  const hasStartedSelecting = Boolean(checkIn || checkOut || selectedRoomCode);
+  const handleBooking = () => {
+    if (errors.length > 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Booking cannot be confirmed',
+        html: errors.map((error) => `<p>${error}</p>`).join(''),
+        confirmButtonText: 'Okay',
+      });
+
+      return;
+    }
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Booking confirmed!',
+      text: `${selectedRoom.type} has been booked successfully.`,
+      confirmButtonText: 'Done',
+    });
+  };
 
   return (
     <div className="page">
       <header className="page__header">
         <h1>Book Your Room</h1>
+
         <p className="page__subtitle">
           Choose your dates, pick a room, and we&rsquo;ll work out the total.
         </p>
@@ -56,7 +78,11 @@ export default function App() {
           </StepSection>
 
           <StepSection number={2} title="Pick a room">
-            <GuestFilter minGuests={minGuests} onChange={setMinGuests} />
+            <GuestFilter
+              minGuests={minGuests}
+              onChange={setMinGuests}
+            />
+
             <RoomList
               rooms={visibleRooms}
               selectedRoomCode={selectedRoomCode}
@@ -72,9 +98,15 @@ export default function App() {
               room={selectedRoom}
               nights={nights}
               total={total}
-              errors={errors}
-              hasStartedSelecting={hasStartedSelecting}
             />
+
+            <button
+              type="button"
+              className="booking-button"
+              onClick={handleBooking}
+            >
+              Confirm Booking
+            </button>
           </StepSection>
         </aside>
       </main>
